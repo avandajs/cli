@@ -1,10 +1,8 @@
 import Template from "./Template";
 
-let command: Template = function (assetName: string,meta: object){
+let command: Template = function (assetName: string,meta: {cmdName: string,cmdDescription: string}){
 
-    // @ts-ignore
     const {cmdName} = meta;
-    // @ts-ignore
     const {cmdDescription} = meta;
     return `import CommandLine from "avanda-cli/CommandLine";
 import {success,error} from "avanda-cli/util";

@@ -2,7 +2,6 @@
 
 import {Command, program} from 'commander'
 import * as defaultCommands from "./defaults/.boot"
-//@ts-ignore
 import * as userCommands from "../../app/commands/.boot"
 import CommandLine from "./CommandLine";
 import chalk from "chalk";
@@ -16,8 +15,7 @@ let allCommands = {...defaultCommands, ...userCommands}
 
 
 for(let c in allCommands){
-    // @ts-ignore
-    let command = new allCommands[c]() as CommandLine;
+    let command = new (allCommands as any)[c]() as CommandLine;
 
     program
 

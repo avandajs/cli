@@ -1,9 +1,9 @@
 {
-  "name": "avanda-cli",
-  "version": "1.0.7",
+  "name": "@avanda/cli",
+  "version": "0.0.1",
   "description": "Avanda cli ",
   "main": "index.ts",
-  "author": "Wharley01",
+  "author": "wharley01",
   "license": "MIT",
   "private": false,
   "scripts": {

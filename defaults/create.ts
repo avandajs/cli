@@ -22,7 +22,7 @@ export default class Create implements CommandLine {
         }
     ]
 
-    writePaths: object = {
+    writePaths: {[k: string]: string} = {
         command: "./app/commands",
         controller: "./app/controllers",
         middleware: "./app/middlewares",
@@ -33,22 +33,18 @@ export default class Create implements CommandLine {
 
         let template = modelTmp(assetName,{})
 
-        // @ts-ignore
         Create.writeCode(template,this.writePaths.model + '/' + assetName + '.ts')
 
         success('Model code successfully generated',false)
-        // @ts-ignore
         await (new Boot()).exe(this.writePaths.model,{})
     }
     private async middlewareCreate(assetName: string){
 
         let template = middlewareTmp(assetName,{})
 
-        // @ts-ignore
         Create.writeCode(template,this.writePaths.middleware + '/' + assetName + '.ts')
 
         success('Model code successfully generated',false)
-        // @ts-ignore
         await (new Boot()).exe(this.writePaths.middleware,{})
     }
 
@@ -60,7 +56,6 @@ export default class Create implements CommandLine {
         // get command name
         meta.modelName = Create.toUpper(await getInput('Enter an existing model name'))
 
-        // @ts-ignore
         if (meta.modelName.trim().length && !fs.existsSync(this.writePaths.model + '/' + meta.modelName + '.ts')){
             error('Model with name: "' + meta.modelName + '" does not exist')
             return
@@ -68,11 +63,9 @@ export default class Create implements CommandLine {
 
         let template = controllerTmp(assetName, meta)
 
-        // @ts-ignore
         Create.writeCode(template,this.writePaths.controller + '/' + assetName + '.ts')
 
         success('Controller code successfully generated', false)
-        // @ts-ignore
         await (new Boot()).exe(this.writePaths.controller,{})
 
 
@@ -90,10 +83,8 @@ export default class Create implements CommandLine {
 
         let template = commandTmp(assetName, meta)
 
-        // @ts-ignore
         Create.writeCode(template,this.writePaths.command + '/' + assetName + '.ts')
 
-        // @ts-ignore
         await (new Boot()).exe(this.writePaths.command,{})
 
         success('Command code successfully generated')
@@ -120,9 +111,8 @@ export default class Create implements CommandLine {
     }
 
 
-    public async exe(asset: string = '',options: object) {
+    public async exe(asset: string = '',options: {n: string}) {
 
-        // @ts-ignore
         let assetName = options?.n ?? (await getInput('Enter ' + asset + ' name:'));
 
         if (!assetName) {
@@ -133,10 +123,9 @@ export default class Create implements CommandLine {
         assetName = Create.toUpper(camelCase(assetName))
 
 
-        // @ts-ignore
-        if(this[asset+'Create']){
-            // @ts-ignore
-            this[asset+'Create'](assetName)
+        if((this as any)[asset+'Create']){
+            
+            (this as any)[asset+'Create'](assetName)
         }else{
             error('unsupported asset type: '+ asset)
         }

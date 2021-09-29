@@ -47,8 +47,7 @@ export default class App implements CommandLine {
 
     private async install(tableName: string,force: boolean = false){
 
-        // @ts-ignore
-        let m = models[tableName];
+        let m = (models as any)[tableName];
 
         if (!m){
             error(`Error: "${m}" model does not exist`)
@@ -57,7 +56,6 @@ export default class App implements CommandLine {
 
         let model =  new m(this.connection) as Model;
 
-        // @ts-ignore
         try {
             await model.init().sync({alter: true,logging: false,benchmark: true,force})
             success(`>> ✅ "${tableName}" synchronized `,false)
@@ -70,8 +68,7 @@ export default class App implements CommandLine {
 
     private async uninstall(tableName: string){
 
-        // @ts-ignore
-        let m = models[tableName];
+        let m = (models as any)[tableName];
 
         if (!m){
             error(`Error: "${m}" model does not exist`)
@@ -80,7 +77,6 @@ export default class App implements CommandLine {
 
         let model =  new m(this.connection) as Model;
 
-        // @ts-ignore
         try {
             await model.init().drop({logging: false,benchmark: true, cascade: true})
             success(`>> ✅ "${tableName}" dropped `,false)
@@ -91,16 +87,13 @@ export default class App implements CommandLine {
 
     }
 
-    public async exe(action: string = '',options: object) {
+    public async exe(action: string = '',options: {t: string,y:boolean,Force: boolean}) {
 
         this.connection = await connection(database);
 
 
-        // @ts-ignore
         let {t: tableName} = options
-        // @ts-ignore
         let {y: yes} = options
-        // @ts-ignore
         let {Force: force} = options
 
         if (force){
@@ -123,8 +116,7 @@ export default class App implements CommandLine {
             }
             for(let table in models){
                 table = this.capitalize(camelCase(table))
-                // @ts-ignore
-                await this[action](table,!!force)
+                await (this as any)[action](table,!!force)
             }
             console.log("----------------------")
             success(`>> ✅ All models synchronized`)
@@ -135,8 +127,7 @@ export default class App implements CommandLine {
 
         tableName = this.capitalize(camelCase(tableName))
 
-        // @ts-ignore
-        await this[action](tableName,!!force)
+        await (this as any)[action](tableName,!!force)
 
         if (force){
             await this.connection.query("SET FOREIGN_KEY_CHECKS = 1")
