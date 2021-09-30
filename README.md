@@ -1,6 +1,6 @@
-## Avanda-cli
+## @avanda/cli
 
-avanda-cli is the cli module of avandajs, it's required to run any avandajs project
+@avanda/cli is the cli module of avandajs, it's required to run any avandajs project
 
 ## Installation
 you can add @avanda/cli to your avandajs using npm

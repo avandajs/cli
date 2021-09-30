@@ -1,16 +1,16 @@
 import CommandLine from "../CommandLine";
 import {camelCase,snakeCase} from "lodash";
 const cliProgress = require("cli-progress");
-import * as models from "../../../app/models/.boot"
+import * as models from "../../../../app/models/.boot"
 import {error, success} from "../util";
-import {Model} from "avanda-orm";
-import connection from "avanda-core/database/connection";
-import database from "../../../configs/database";
+import { Model } from "@avanda/orm";
+import connection from "../../app/database/connection";
+import database from "../../../../configs/database";
 import {Command} from "commander";
 import confirm from "../util/confirm";
 import {Sequelize} from "sequelize";
-// import {runtimeError} from "avanda-error";
-// import {Model} from "avanda-orm";
+// import {runtimeError} from "@avanda/error";
+// import {Model} from "@avanda/orm";
 
 
 export default class App implements CommandLine {

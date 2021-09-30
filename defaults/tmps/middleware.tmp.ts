@@ -2,8 +2,8 @@ import Template from "./Template";
 
 let middleware: Template = function (assetName: string,meta: object){
 
-    return `import {Middleware} from "avanda-http/middleware";
-import {Request, Response} from "avanda-http";
+    return `import {Middleware} from "@avanda/http/middleware";
+import {Request, Response} from "@avanda/http";
 
 export default class ${assetName} implements Middleware{
     validate(res: Response, req: Request): boolean {

@@ -4,8 +4,8 @@ let controller: Template = function (assetName: string, meta: {modelName?: strin
 
     const {modelName} = meta;
 
-    return `import {Controller, Request, Response} from "avanda-http/index";
-import {get} from "avanda-http/verbs";
+    return `import {Controller, Request, Response} from "@avanda/http/index";
+import {get} from "@avanda/http/verbs";
 ${modelName ? `import Model from "../models/${modelName}"\n`:''}
 export default class ${assetName} extends Controller {
     ${modelName ? 'model?: Model':''}

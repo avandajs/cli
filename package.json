@@ -1,6 +1,6 @@
 {
   "name": "@avanda/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Avanda cli ",
   "main": "index.ts",
   "author": "wharley01",
@@ -10,6 +10,7 @@
     "dev": "nodemon"
   },
   "dependencies": {
+    "@avanda/orm": "0.0.1",
     "app-root-path": "^3.0.0",
     "chalk": "^4.1.2",
     "cli-progress": "^3.9.1",

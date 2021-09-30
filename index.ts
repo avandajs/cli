@@ -2,7 +2,7 @@
 
 import {Command, program} from 'commander'
 import * as defaultCommands from "./defaults/.boot"
-import * as userCommands from "../../app/commands/.boot"
+import * as userCommands from "../../../app/commands/.boot"
 import CommandLine from "./CommandLine";
 import chalk from "chalk";
 
