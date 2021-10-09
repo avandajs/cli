@@ -4,8 +4,8 @@ let command: Template = function (assetName: string,meta: {cmdName: string,cmdDe
 
     const {cmdName} = meta;
     const {cmdDescription} = meta;
-    return `import CommandLine from "@avanda/cli/CommandLine";
-import {success,error} from "@avanda/cli/util";
+    return `import { CommandLine } from "@avanda/cli";
+import {Out} from "@avanda/cli";
 
 
 export default class ${assetName} implements CommandLine {
@@ -14,7 +14,7 @@ export default class ${assetName} implements CommandLine {
 
 
     public exe(target: string = '',options: object) {
-        success('this is coming from ${assetName}')
+        Out.success('this is coming from ${assetName}')
     }
 
 }`
