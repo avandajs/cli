@@ -1,22 +1,17 @@
 import CommandLine from "../CommandLine";
 import {camelCase,snakeCase} from "lodash";
-const cliProgress = require("cli-progress");
-import * as models from "../../../../app/models/.boot"
-import {error, success} from "../util";
+import {error, success} from "../out";
 import { Model } from "@avanda/orm";
-import connection from "../../app/database/connection";
-import database from "../../../../configs/database";
-import {Command} from "commander";
-import confirm from "../util/confirm";
+import confirm from "../out/confirm";
 import {Sequelize} from "sequelize";
-// import {runtimeError} from "@avanda/error";
-// import {Model} from "@avanda/orm";
+
 
 
 export default class App implements CommandLine {
     command: string = "app <action>";
     description: string = "App migration command";
     connection?: Sequelize
+    models: {[k: string]: new (connection: Sequelize) => Model}
     options = [
         {
             option: '-t <table-name>',
@@ -47,7 +42,7 @@ export default class App implements CommandLine {
 
     private async install(tableName: string,force: boolean = false){
 
-        let m = (models as any)[tableName];
+        let m = this.models[tableName];
 
         if (!m){
             error(`Error: "${m}" model does not exist`)
@@ -68,7 +63,7 @@ export default class App implements CommandLine {
 
     private async uninstall(tableName: string){
 
-        let m = (models as any)[tableName];
+        let m = this.models[tableName];
 
         if (!m){
             error(`Error: "${m}" model does not exist`)
@@ -89,7 +84,8 @@ export default class App implements CommandLine {
 
     public async exe(action: string = '',options: {t: string,y:boolean,Force: boolean}) {
 
-        this.connection = await connection(database);
+       if (!this.connection)
+           throw new Error('Connection not found')
 
 
         let {t: tableName} = options
@@ -114,7 +110,7 @@ export default class App implements CommandLine {
                 success('Done!')
                 return;
             }
-            for(let table in models){
+            for(let table in this.models){
                 table = this.capitalize(camelCase(table))
                 await (this as any)[action](table,!!force)
             }
