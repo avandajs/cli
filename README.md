@@ -5,12 +5,12 @@
 ## Installation
 you can add @avanda/cli to your avandajs using npm
 ```bash
-$ npm i @avanda/cli
+$ npm i @index.ts/cli
 ```
 or yarn
 
 ```bash
-$ yarn add @avanda/cli
+$ yarn add @index.ts/cli
 ```
 
 ## usage
@@ -21,7 +21,7 @@ add avanda to list of commands in your package.json then run:
 ### local installation
 For project scope
 ```bash
-$ yarn avanda
+$ yarn index.ts
 ```
 
 ### global scope
@@ -29,12 +29,12 @@ $ yarn avanda
 When avanda cli is installed globally, you don't need to add it to your, you can just run:
 
 ```bash
-$ avanda -h
+$ index.ts -h
 ```
 or 
 
 ```bash
-$ avanda create model
+$ index.ts create model
 ```
 
 command above will create a database model usable in your avanda project

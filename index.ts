@@ -2,37 +2,44 @@
 
 import {Command, program} from 'commander'
 import * as defaultCommands from "./defaults/.boot"
-import * as userCommands from "../../../app/commands/.boot"
 import CommandLine from "./CommandLine";
-import chalk from "chalk";
+import {Sequelize} from "sequelize";
+import * as Out from "./out";
 
 
+export default function Avanda (
+    commands: {[k: string]: any},
+    models: {[k: string]: any},
+    connection?: Sequelize
+){
 
-// console.log(chalk.yellow.yellow('hello world'))
+    let allCommands = {...defaultCommands, ...commands}
 
-let allCommands = {...defaultCommands, ...userCommands}
+    for(let c in allCommands){
+        let command = new (allCommands as any)[c]() as CommandLine;
+        command.connection = connection
+        command.models = models
 
+        program
+            .command(command.command)
+            .description(command.description)
+            .action((arg) => {
+                command.exe(arg,program.opts())
+            });
 
-
-for(let c in allCommands){
-    let command = new (allCommands as any)[c]() as CommandLine;
-
-    program
-
-        .command(command.command)
-
-        .description(command.description)
-        .action((arg) => {
-            command.exe(arg,program.opts())
-        });
-
-    if (command?.options){//if command has options, populate options
-        command.options.forEach(option => {
-            program.option(option.option,option.description)
-        })
+        if (command?.options){//if command has options, populate options
+            command.options.forEach(option => {
+                program.option(option.option,option.description)
+            })
+        }
+        // program
     }
-    // program
-}
-program.parse()
+    program.parse()
 
 //
+}
+
+export {
+    CommandLine,
+    Out
+}
