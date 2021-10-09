@@ -1,11 +1,10 @@
 import CommandLine from "../CommandLine";
-const cliProgress = require("cli-progress");
 import fs, {Dirent, write} from "fs"
 import path from "path"
 import Boot from "./boostraper"
 import {camelCase, kebabCase} from "lodash";
-import {error, success} from "../util";
-import getInput from "../util/getInput";
+import {error, success} from "../out";
+import getInput from "../out/getInput";
 import commandTmp from "./tmps/command.tmp";
 import modelTmp from "./tmps/model.tmp";
 import middlewareTmp from "./tmps/middleware.tmp";

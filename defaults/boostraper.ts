@@ -1,11 +1,8 @@
 import CommandLine from "../CommandLine";
-import chalk from "chalk";
-const cliProgress = require("cli-progress");
 import fs, {Dirent} from "fs"
 import path from "path"
-import {success} from "../util";
-// import commands from "../../../app/commands/";
-// import "../defaults"
+import {success} from "../out";
+
 
 export default class Boostrap implements CommandLine {
     command: string = "bootstrap <target>";
@@ -28,7 +25,7 @@ export default class Boostrap implements CommandLine {
 
         let code = ``;
         let imports = ``;
-        let exports = `export {`
+        let exports = `export default{`
 
         let files = fs.readdirSync(target,{ withFileTypes: true })
 
