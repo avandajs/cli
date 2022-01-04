@@ -5,9 +5,9 @@ let controller: Template = function (assetName: string, meta: {modelName?: strin
     const {modelName} = meta;
 
     return `import {Controller, Request, Response, Get} from "@avanda/http";
-${modelName ? `import Model from "../models/${modelName}"\n`:''}
-export default class ${assetName} extends Controller {
-    ${modelName ? 'model?: Model':''}
+${modelName ? `import ${assetName} from "../models/${modelName}"\n`:''}
+export default class extends Controller {
+    ${modelName ? 'model?: ' + assetName:''}
     
     @Get()
     async get(res: Response,req: Request){
