@@ -10,6 +10,7 @@ import * as Out from "./out";
 export default function Avanda (
     commands: {[k: string]: any},
     models: {[k: string]: any},
+    seeders: {[k: string]: any},
     connection?: Sequelize
 ){
 
@@ -19,6 +20,7 @@ export default function Avanda (
         let command = new (allCommands as any)[c]() as CommandLine;
         command.connection = connection
         command.models = models
+        command.seeders = seeders
 
         program
             .command(command.command)

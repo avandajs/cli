@@ -1,7 +1,7 @@
 {
   "name": "@avanda/cli",
-  "version": "0.10.5",
-  "description": "Avanda CLI ",
+  "version": "0.10.19",
+  "description": "Avanda CLI",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "author": "Wharley01",
@@ -14,9 +14,11 @@
     "dev": "nodemon"
   },
   "dependencies": {
-    "@avanda/error": "0.0.8",
-    "@avanda/orm": "0.0.7",
+    "@avanda/error": "^0.2.1",
+    "@avanda/orm": "^0.2.27",
+    "@types/faker": "^5.5.9",
     "commander": "^8.2.0",
+    "faker": "^5.5.3",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.6.5"

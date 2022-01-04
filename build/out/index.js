@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.success = exports.error = void 0;
-const error_1 = __importDefault(require("./error"));
+var error_1 = __importDefault(require("./error"));
 exports.error = error_1.default;
-const success_1 = __importDefault(require("./success"));
+var success_1 = __importDefault(require("./success"));
 exports.success = success_1.default;

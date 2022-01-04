@@ -1,10 +1,10 @@
 import CommandLine from "../CommandLine";
 import {camelCase,snakeCase} from "lodash";
 import {error, success} from "../out";
-import { Model } from "@avanda/orm";
+import { Model,Seeder } from "@avanda/orm";
 import confirm from "../out/confirm";
 import {Sequelize} from "sequelize";
-
+import * as Faker from "faker";
 
 
 export default class App implements CommandLine {
@@ -12,10 +12,11 @@ export default class App implements CommandLine {
     description: string = "App migration command";
     connection?: Sequelize
     models: {[k: string]: new (connection: Sequelize) => Model}
+    seeders: {[k: string]: new () => Seeder}
     options = [
         {
             option: '-t <table-name>',
-            description: 'Table to install'
+            description: 'Table to perform action on'
         },
         {
             option: '-y',
@@ -39,6 +40,25 @@ export default class App implements CommandLine {
         return model as unknown as string
     }
 
+    private async seed(tableName: string,force: boolean = false){
+
+        const seeder = this.seeders[tableName];
+
+        if (!seeder){
+            error(`Error: "${tableName}" model does not exist`)
+            return;
+        }
+
+        let seederInstance =  new seeder();
+
+        try {
+            await seederInstance.run(Faker)
+            success(`>> ✅ "${tableName}" populated `,false)
+        }catch (e){
+            error(`>> ❌ "${tableName}": ${e}`)
+        }
+
+    }
 
     private async install(tableName: string,force: boolean = false){
 
@@ -52,7 +72,7 @@ export default class App implements CommandLine {
         let model =  new m(this.connection) as Model;
 
         try {
-            await model.init().sync({alter: true,logging: false,benchmark: true,force})
+            await (await model.init()).sync({alter: true,logging: false,benchmark: true,force})
             success(`>> ✅ "${tableName}" synchronized `,false)
         }catch (e){
             error(`>> ❌ "${tableName}": ${e}`)
@@ -61,7 +81,7 @@ export default class App implements CommandLine {
 
     }
 
-    private async uninstall(tableName: string){
+    private async uninstall(tableName: string, force: boolean = false){
 
         let m = this.models[tableName];
 
@@ -73,7 +93,7 @@ export default class App implements CommandLine {
         let model =  new m(this.connection) as Model;
 
         try {
-            await model.init().drop({logging: false,benchmark: true, cascade: true})
+            await(await model.init()).drop({logging: false,benchmark: true, cascade: true})
             success(`>> ✅ "${tableName}" dropped `,false)
         }catch (e){
             error(`>> ❌ "${tableName}": ${e}`)
@@ -93,10 +113,10 @@ export default class App implements CommandLine {
         let {Force: force} = options
 
         if (force){
-            await this.connection.query("SET FOREIGN_KEY_CHECKS = 0")
+            await this.connection.query("SET FOREIGN_KEY_CHECKS = 0", null)
         }
 
-        let acceptableCommands = ['install','uninstall']
+        let acceptableCommands = ['install','uninstall','seed']
 
 
         if (!acceptableCommands.includes(action)) {
@@ -110,7 +130,15 @@ export default class App implements CommandLine {
                 success('Done!')
                 return;
             }
-            for(let table in this.models){
+            let targetAliases = {
+                seed: 'seeders',
+                install: 'models',
+                uninstall: 'models'
+            }
+
+            let targetList = this[targetAliases[action]];
+
+            for(let table in targetList){
                 table = this.capitalize(camelCase(table))
                 await (this as any)[action](table,!!force)
             }

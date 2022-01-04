@@ -1,24 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let controller = function (assetName, meta) {
-    const { modelName } = meta;
-    return `import {Controller, Request, Response, Get} from "@avanda/http";
-${modelName ? `import Model from "../models/${modelName}"\n` : ''}
-export default class ${assetName} extends Controller {
-    ${modelName ? 'model?: Model' : ''}
-    
-    @Get()
-    async get(res: Response,req: Request){
-
-        let users = ${modelName ? `await this.model
-            ?.where('first_name')
-            .like('%aisha')
-            .orderBy('id','DESC')
-            .all();` : 'null;'}
-        
-        return res.success<any>('hello world',users)
-    }
-}
-`;
+var controller = function (assetName, meta) {
+    var modelName = meta.modelName;
+    return "import {Controller, Request, Response, Get} from \"@avanda/http\";\n" + (modelName ? "import " + assetName + " from \"../models/" + modelName + "\"\n" : '') + "\nexport default class extends Controller {\n    " + (modelName ? 'model?: ' + assetName : '') + "\n    \n    @Get()\n    async get(res: Response,req: Request){\n\n        let users = " + (modelName ? "await this.model\n            ?.where('first_name')\n            .like('%aisha')\n            .orderBy('id','DESC')\n            .all();" : 'null;') + "\n        \n        return res.success<any>('hello world',users)\n    }\n}\n";
 };
 exports.default = controller;

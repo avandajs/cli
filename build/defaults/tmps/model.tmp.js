@@ -1,14 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let command = function (assetName, meta) {
-    return `import {Column,Model} from "@avanda/orm";
-
-export default class ${assetName} extends Model{
-    @Column.text({
-        masSize: 20,
-        nullable: true
-    })
-    sample_column?:string;
-}`;
+var command = function (assetName, meta) {
+    return "import {Column,Model} from \"@avanda/orm\";\n\nexport default class " + assetName + " extends Model{\n    @Column.text({\n        masSize: 20,\n        nullable: true\n    })\n    sample_column?:string;\n}";
 };
 exports.default = command;

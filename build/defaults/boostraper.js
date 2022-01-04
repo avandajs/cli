@@ -3,17 +3,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const out_1 = require("../out");
-class Boostrap {
-    constructor() {
+var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
+var out_1 = require("../out");
+var Boostrap = /** @class */ (function () {
+    function Boostrap() {
         this.command = "bootstrap <target>";
         this.description = "generate a bootstrapper";
         this.userCommands = "../../../app/commands";
         this.defaultCommands = "./defaults";
     }
-    capitalize(file) {
+    Boostrap.prototype.capitalize = function (file) {
         if (typeof file === "string") {
             file = file === null || file === void 0 ? void 0 : file.split('');
             file[0] = file[0].toUpperCase(); //COn
@@ -21,30 +21,32 @@ class Boostrap {
             return file;
         }
         return null;
-    }
-    exe(target = '', options) {
-        let code = ``;
-        let imports = ``;
-        let exports = `export default{`;
-        let files = fs_1.default.readdirSync(target, { withFileTypes: true });
-        for (let index = 0; index < files.length; index++) {
-            let file;
+    };
+    Boostrap.prototype.exe = function (target, options) {
+        if (target === void 0) { target = ''; }
+        var code = "";
+        var imports = "";
+        var exports = "export default{";
+        var files = fs_1.default.readdirSync(target, { withFileTypes: true });
+        for (var index = 0; index < files.length; index++) {
+            var file = void 0;
             file = files[index];
             if (!file.isFile())
                 continue;
             file = path_1.default.parse(file.name);
             if (!(file.ext == 'ts' || file.ext == 'js') && file.name === '.boot') //skip the main boot file
                 continue;
-            let cappedFile = this.capitalize(file.name);
-            imports += `import ${cappedFile} from "./${file.name}"; \n`;
-            exports += `\n\t${cappedFile},`;
+            var cappedFile = this.capitalize(file.name);
+            imports += "import " + cappedFile + " from \"./" + file.name + "\"; \n";
+            exports += "\n\t" + cappedFile + ",";
         }
         exports += '\n}';
-        code = `${imports}${exports}`;
-        fs_1.default.writeFileSync(`${target}/.boot.ts`, code);
+        code = "" + imports + exports;
+        fs_1.default.writeFileSync(target + "/.boot.ts", code);
         // Write
-        (0, out_1.success)(`>> .boot file generted in: ${target}`);
+        (0, out_1.success)(">> .boot file generted in: " + target);
         // console.log(code)
-    }
-}
+    };
+    return Boostrap;
+}());
 exports.default = Boostrap;

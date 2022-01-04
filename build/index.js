@@ -1,5 +1,16 @@
 #! /usr/bin/env ts-node
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -21,28 +32,31 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Out = void 0;
-const commander_1 = require("commander");
-const defaultCommands = __importStar(require("./defaults/.boot"));
-const Out = __importStar(require("./out"));
+var commander_1 = require("commander");
+var defaultCommands = __importStar(require("./defaults/.boot"));
+var Out = __importStar(require("./out"));
 exports.Out = Out;
-function Avanda(commands, models, connection) {
-    let allCommands = Object.assign(Object.assign({}, defaultCommands), commands);
-    for (let c in allCommands) {
-        let command = new allCommands[c]();
+function Avanda(commands, models, seeders, connection) {
+    var allCommands = __assign(__assign({}, defaultCommands), commands);
+    var _loop_1 = function (c) {
+        var command = new allCommands[c]();
         command.connection = connection;
         command.models = models;
+        command.seeders = seeders;
         commander_1.program
             .command(command.command)
             .description(command.description)
-            .action((arg) => {
+            .action(function (arg) {
             command.exe(arg, commander_1.program.opts());
         });
         if (command === null || command === void 0 ? void 0 : command.options) { //if command has options, populate options
-            command.options.forEach(option => {
+            command.options.forEach(function (option) {
                 commander_1.program.option(option.option, option.description);
             });
         }
-        // program
+    };
+    for (var c in allCommands) {
+        _loop_1(c);
     }
     commander_1.program.parse();
     //
