@@ -3,7 +3,7 @@ import {camelCase,snakeCase} from "lodash";
 import {error, success} from "../out";
 import { Model,Seeder } from "@avanda/orm";
 import confirm from "../out/confirm";
-import {Sequelize} from "sequelize";
+import {Sequelize} from "sequelize/types";
 import * as Faker from "faker";
 
 

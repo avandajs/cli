@@ -11,7 +11,7 @@ export default class Boostrap implements CommandLine {
     userCommands: string = "../../../app/commands";
     defaultCommands: string = "./defaults";
 
-    private capitalize(file: string| string[]): string | null{
+    private static capitalize(file: string| string[]): string | null{
         if (typeof file === "string") {
             file = file?.split('')
             file[0] = file[0].toUpperCase();//COn
@@ -43,7 +43,7 @@ export default class Boostrap implements CommandLine {
             if (!(file.ext == 'ts' || file.ext == 'js') && file.name === '.boot')//skip the main boot file
                 continue;
 
-            let cappedFile = this.capitalize(file.name)
+            let cappedFile = Boostrap.capitalize(file.name)
 
             imports += `import ${cappedFile} from "./${file.name}"; \n`
 

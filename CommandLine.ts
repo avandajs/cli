@@ -1,5 +1,5 @@
 import {Command} from "commander";
-import {Sequelize} from "sequelize";
+import {Sequelize} from "sequelize/types";
 import {Model, Seeder} from "@avanda/orm"
 
 export default interface CommandLine {

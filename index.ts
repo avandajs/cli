@@ -3,7 +3,7 @@
 import {Command, program} from 'commander'
 import * as defaultCommands from "./defaults/.boot"
 import CommandLine from "./CommandLine";
-import {Sequelize} from "sequelize";
+import {Sequelize} from "sequelize/types";
 import * as Out from "./out";
 
 

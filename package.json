@@ -14,20 +14,23 @@
     "dev": "nodemon"
   },
   "dependencies": {
+    "@avanda/app": "^1.9.52",
+    "@avanda/core": "^0.9.0",
     "@avanda/error": "^0.2.1",
-    "@avanda/orm": "^0.2.27",
+    "@avanda/orm": "^0.2.28",
     "@types/faker": "^5.5.9",
+    "axios": "^0.26.0",
     "commander": "^8.2.0",
     "faker": "^5.5.3",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.16.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/debug": "^4.1.7",
     "@types/express": "^4.17.13",
-    "@types/lodash": "^4.14.175",
+    "@types/lodash": "^4.14.178",
     "@types/node": "^16.4.13",
     "nodemon": "^2.0.12",
     "source-map-support": "^0.5.19",

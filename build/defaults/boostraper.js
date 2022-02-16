@@ -13,7 +13,7 @@ var Boostrap = /** @class */ (function () {
         this.userCommands = "../../../app/commands";
         this.defaultCommands = "./defaults";
     }
-    Boostrap.prototype.capitalize = function (file) {
+    Boostrap.capitalize = function (file) {
         if (typeof file === "string") {
             file = file === null || file === void 0 ? void 0 : file.split('');
             file[0] = file[0].toUpperCase(); //COn
@@ -36,15 +36,15 @@ var Boostrap = /** @class */ (function () {
             file = path_1.default.parse(file.name);
             if (!(file.ext == 'ts' || file.ext == 'js') && file.name === '.boot') //skip the main boot file
                 continue;
-            var cappedFile = this.capitalize(file.name);
-            imports += "import " + cappedFile + " from \"./" + file.name + "\"; \n";
-            exports += "\n\t" + cappedFile + ",";
+            var cappedFile = Boostrap.capitalize(file.name);
+            imports += "import ".concat(cappedFile, " from \"./").concat(file.name, "\"; \n");
+            exports += "\n\t".concat(cappedFile, ",");
         }
         exports += '\n}';
-        code = "" + imports + exports;
-        fs_1.default.writeFileSync(target + "/.boot.ts", code);
+        code = "".concat(imports).concat(exports);
+        fs_1.default.writeFileSync("".concat(target, "/.boot.ts"), code);
         // Write
-        (0, out_1.success)(">> .boot file generted in: " + target);
+        (0, out_1.success)(">> .boot file generted in: ".concat(target));
         // console.log(code)
     };
     return Boostrap;
