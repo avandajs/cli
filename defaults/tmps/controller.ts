@@ -5,20 +5,13 @@ let controller: Template = function (assetName: string, meta: {modelName?: strin
     const {modelName} = meta;
 
     return `import {Controller, Request, Response, Get} from "@avanda/http";
-${modelName ? `import ${assetName} from "../models/${modelName}"\n`:''}
-export default class extends Controller {
-    ${modelName ? 'model?: ' + assetName:''}
+${modelName ? `import ${assetName}Model from "../models/${modelName}"\n`:''}
+export default class ${modelName} extends Controller {
+    ${modelName ? `model?:  ${assetName}Model`:''}
     
     @Get()
-    async get(res: Response,req: Request){
-
-        let users = ${modelName ? `await this.model
-            ?.where('first_name')
-            .like('%aisha')
-            .orderBy('id','DESC')
-            .all();` : 'null;'}
-        
-        return res.success<any>('hello world',users)
+    async get(res: Response,req: Request){  
+        return res.success<any>('hello world',this.model?.first())
     }
 }
 `

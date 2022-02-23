@@ -57,7 +57,11 @@ var Create = /** @class */ (function () {
             {
                 option: '-n <name>',
                 description: 'Asset name'
-            }
+            },
+            {
+                option: '-all',
+                description: 'Create all necessary assets at once'
+            },
         ];
         this.writePaths = {
             command: "./app/commands",
@@ -118,21 +122,29 @@ var Create = /** @class */ (function () {
             });
         });
     };
-    Create.prototype.controllerCreate = function (assetName) {
+    Create.prototype.controllerCreate = function (assetName, autoLinkModel) {
+        if (autoLinkModel === void 0) { autoLinkModel = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var meta, _a, _b, _c, template;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var meta, _a, _b, _c, _d, template;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         meta = {};
                         // get command name
                         _a = meta;
-                        _c = (_b = Create).toUpper;
-                        return [4 /*yield*/, (0, getInput_1.default)('Enter an existing model name')];
+                        if (!autoLinkModel) return [3 /*break*/, 1];
+                        _b = assetName;
+                        return [3 /*break*/, 3];
                     case 1:
+                        _d = (_c = Create).toUpper;
+                        return [4 /*yield*/, (0, getInput_1.default)('Enter an existing model name')];
+                    case 2:
+                        _b = _d.apply(_c, [_e.sent()]);
+                        _e.label = 3;
+                    case 3:
                         // get command name
-                        _a.modelName = _c.apply(_b, [_d.sent()]);
-                        if (meta.modelName.trim().length && !fs_1.default.existsSync(this.writePaths.model + '/' + meta.modelName + '.ts')) {
+                        _a.modelName = _b;
+                        if (!autoLinkModel && meta.modelName.trim().length && !fs_1.default.existsSync(this.writePaths.model + '/' + meta.modelName + '.ts')) {
                             (0, out_1.error)('Model with name: "' + meta.modelName + '" does not exist');
                             return [2 /*return*/];
                         }
@@ -140,8 +152,8 @@ var Create = /** @class */ (function () {
                         Create.writeCode(template, this.writePaths.controller + '/' + assetName + '.ts');
                         (0, out_1.success)('Controller code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.controller, {})];
-                    case 2:
-                        _d.sent();
+                    case 4:
+                        _e.sent();
                         return [2 /*return*/];
                 }
             });
@@ -212,6 +224,23 @@ var Create = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         assetName = Create.toUpper((0, lodash_1.camelCase)(assetName));
+                        if (!('all' in options)) return [3 /*break*/, 7];
+                        //    create all assets
+                        //    create model
+                        return [4 /*yield*/, this.modelCreate(assetName)];
+                    case 4:
+                        //    create all assets
+                        //    create model
+                        _c.sent();
+                        return [4 /*yield*/, this.controllerCreate(assetName)];
+                    case 5:
+                        _c.sent();
+                        return [4 /*yield*/, this.seederCreate(assetName)];
+                    case 6:
+                        _c.sent();
+                        (0, out_1.success)("All necessary assets generated");
+                        _c.label = 7;
+                    case 7:
                         if (this[asset + 'Create']) {
                             this[asset + 'Create'](assetName);
                         }

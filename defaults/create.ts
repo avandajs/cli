@@ -19,7 +19,12 @@ export default class Create implements CommandLine {
         {
             option: '-n <name>',
             description: 'Asset name'
-        }
+        },
+        {
+            option: '-all',
+            description: 'Create all necessary assets at once'
+        },
+
     ]
 
     writePaths: {[k: string]: string} = {
@@ -58,15 +63,15 @@ export default class Create implements CommandLine {
         await (new Boot()).exe(this.writePaths.middleware,{})
     }
 
-    private async controllerCreate(assetName: string){
+    private async controllerCreate(assetName: string, autoLinkModel = false){
 
 
         let meta: {modelName?: string} = {};
 
         // get command name
-        meta.modelName = Create.toUpper(await getInput('Enter an existing model name'))
+        meta.modelName = autoLinkModel ? assetName :  Create.toUpper(await getInput('Enter an existing model name'))
 
-        if (meta.modelName.trim().length && !fs.existsSync(this.writePaths.model + '/' + meta.modelName + '.ts')){
+        if (!autoLinkModel && meta.modelName.trim().length && !fs.existsSync(this.writePaths.model + '/' + meta.modelName + '.ts')){
             error('Model with name: "' + meta.modelName + '" does not exist')
             return
         }
@@ -121,7 +126,7 @@ export default class Create implements CommandLine {
     }
 
 
-    public async exe(asset: string = '',options: {n: string}) {
+    public async exe(asset: string = '',options: {n: string,all: any}) {
 
         let assetName = options?.n ?? (await getInput('Enter ' + asset + ' name:'));
 
@@ -131,6 +136,17 @@ export default class Create implements CommandLine {
         }
 
         assetName = Create.toUpper(camelCase(assetName))
+
+        if ('all' in options){
+        //    create all assets
+        //    create model
+            await this.modelCreate(assetName);
+            await this.controllerCreate(assetName);
+            await this.seederCreate(assetName)
+
+            success("All necessary assets generated");
+
+        }
 
 
         if((this as any)[asset+'Create']){
