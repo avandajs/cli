@@ -21,7 +21,7 @@ export default class Create implements CommandLine {
             description: 'Asset name'
         },
         {
-            option: '-all',
+            option: '-a',
             description: 'Create all necessary assets at once'
         },
 
@@ -39,7 +39,7 @@ export default class Create implements CommandLine {
 
         let template = modelTmp(assetName,{})
 
-        Create.writeCode(template,this.writePaths.model + '/' + assetName + '.ts')
+        await Create.writeCode(template,this.writePaths.model + '/' + assetName + '.ts')
 
         success('Model code successfully generated',false)
         await (new Boot()).exe(this.writePaths.model,{})
@@ -48,7 +48,7 @@ export default class Create implements CommandLine {
 
         let template = seederTmp(assetName,{})
 
-        Create.writeCode(template,this.writePaths.seeder + '/' + assetName + '.ts')
+        await Create.writeCode(template,this.writePaths.seeder + '/' + assetName + '.ts')
 
         success('seeder code successfully generated',false)
         await (new Boot()).exe(this.writePaths.seeder,{})
@@ -57,7 +57,7 @@ export default class Create implements CommandLine {
 
         let template = middlewareTmp(assetName,{})
 
-        Create.writeCode(template,this.writePaths.middleware + '/' + assetName + '.ts')
+        await Create.writeCode(template,this.writePaths.middleware + '/' + assetName + '.ts')
 
         success('Model code successfully generated',false)
         await (new Boot()).exe(this.writePaths.middleware,{})
@@ -78,7 +78,7 @@ export default class Create implements CommandLine {
 
         let template = controllerTmp(assetName, meta)
 
-        Create.writeCode(template,this.writePaths.controller + '/' + assetName + '.ts')
+        await Create.writeCode(template,this.writePaths.controller + '/' + assetName + '.ts')
 
         success('Controller code successfully generated', false)
         await (new Boot()).exe(this.writePaths.controller,{})
@@ -98,7 +98,7 @@ export default class Create implements CommandLine {
 
         let template = commandTmp(assetName, meta)
 
-        Create.writeCode(template,this.writePaths.command + '/' + assetName + '.ts')
+        await Create.writeCode(template,this.writePaths.command + '/' + assetName + '.ts')
 
         await (new Boot()).exe(this.writePaths.command,{})
 
@@ -106,12 +106,18 @@ export default class Create implements CommandLine {
 
     }
 
-    private static writeCode(code: string, target: string, ){
-        try {
-            fs.writeFileSync(target,code);
-        }catch (e){
-            error(e as string)
-        }
+    private static async writeCode(code: string, target: string, ){
+
+        return new Promise((resolve,reject) => {
+            try {
+                fs.writeFile(target,code,() => {
+                    resolve(null)
+                });
+            }catch (e){
+                error(e as string)
+            }
+        });
+
     }
 
 
@@ -126,7 +132,9 @@ export default class Create implements CommandLine {
     }
 
 
-    public async exe(asset: string = '',options: {n: string,all: any}) {
+    public async exe(asset: string = '',options: {n: string,a: any}) {
+
+        console.log({options})
 
         let assetName = options?.n ?? (await getInput('Enter ' + asset + ' name:'));
 
@@ -137,7 +145,7 @@ export default class Create implements CommandLine {
 
         assetName = Create.toUpper(camelCase(assetName))
 
-        if ('all' in options){
+        if (options['a']){
         //    create all assets
         //    create model
             await this.modelCreate(assetName);
@@ -145,6 +153,8 @@ export default class Create implements CommandLine {
             await this.seederCreate(assetName)
 
             success("All necessary assets generated");
+
+            return;
 
         }
 

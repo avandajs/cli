@@ -59,7 +59,7 @@ var Create = /** @class */ (function () {
                 description: 'Asset name'
             },
             {
-                option: '-all',
+                option: '-a',
                 description: 'Create all necessary assets at once'
             },
         ];
@@ -78,10 +78,12 @@ var Create = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         template = (0, model_tmp_1.default)(assetName, {});
-                        Create.writeCode(template, this.writePaths.model + '/' + assetName + '.ts');
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.model + '/' + assetName + '.ts')];
+                    case 1:
+                        _a.sent();
                         (0, out_1.success)('Model code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.model, {})];
-                    case 1:
+                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -95,10 +97,12 @@ var Create = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         template = (0, seeder_tmp_1.default)(assetName, {});
-                        Create.writeCode(template, this.writePaths.seeder + '/' + assetName + '.ts');
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.seeder + '/' + assetName + '.ts')];
+                    case 1:
+                        _a.sent();
                         (0, out_1.success)('seeder code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.seeder, {})];
-                    case 1:
+                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -112,10 +116,12 @@ var Create = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         template = (0, middleware_tmp_1.default)(assetName, {});
-                        Create.writeCode(template, this.writePaths.middleware + '/' + assetName + '.ts');
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.middleware + '/' + assetName + '.ts')];
+                    case 1:
+                        _a.sent();
                         (0, out_1.success)('Model code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.middleware, {})];
-                    case 1:
+                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -149,10 +155,12 @@ var Create = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         template = (0, controller_1.default)(assetName, meta);
-                        Create.writeCode(template, this.writePaths.controller + '/' + assetName + '.ts');
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.controller + '/' + assetName + '.ts')];
+                    case 4:
+                        _e.sent();
                         (0, out_1.success)('Controller code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.controller, {})];
-                    case 4:
+                    case 5:
                         _e.sent();
                         return [2 /*return*/];
                 }
@@ -177,9 +185,11 @@ var Create = /** @class */ (function () {
                     case 2:
                         _b.cmdDescription = (_c.sent());
                         template = (0, command_tmp_1.default)(assetName, meta);
-                        Create.writeCode(template, this.writePaths.command + '/' + assetName + '.ts');
-                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.command, {})];
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.command + '/' + assetName + '.ts')];
                     case 3:
+                        _c.sent();
+                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.command, {})];
+                    case 4:
                         _c.sent();
                         (0, out_1.success)('Command code successfully generated');
                         return [2 /*return*/];
@@ -188,12 +198,20 @@ var Create = /** @class */ (function () {
         });
     };
     Create.writeCode = function (code, target) {
-        try {
-            fs_1.default.writeFileSync(target, code);
-        }
-        catch (e) {
-            (0, out_1.error)(e);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        try {
+                            fs_1.default.writeFile(target, code, function () {
+                                resolve(null);
+                            });
+                        }
+                        catch (e) {
+                            (0, out_1.error)(e);
+                        }
+                    })];
+            });
+        });
     };
     Create.toUpper = function (text) {
         if (!text.trim().length)
@@ -210,6 +228,7 @@ var Create = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
+                        console.log({ options: options });
                         if (!((_a = options === null || options === void 0 ? void 0 : options.n) !== null && _a !== void 0)) return [3 /*break*/, 1];
                         _b = _a;
                         return [3 /*break*/, 3];
@@ -224,7 +243,7 @@ var Create = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         assetName = Create.toUpper((0, lodash_1.camelCase)(assetName));
-                        if (!('all' in options)) return [3 /*break*/, 7];
+                        if (!options['a']) return [3 /*break*/, 7];
                         //    create all assets
                         //    create model
                         return [4 /*yield*/, this.modelCreate(assetName)];
@@ -239,7 +258,7 @@ var Create = /** @class */ (function () {
                     case 6:
                         _c.sent();
                         (0, out_1.success)("All necessary assets generated");
-                        _c.label = 7;
+                        return [2 /*return*/];
                     case 7:
                         if (this[asset + 'Create']) {
                             this[asset + 'Create'](assetName);
