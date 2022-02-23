@@ -141,7 +141,7 @@ export default class Create implements CommandLine {
         //    create all assets
         //    create model
             await this.modelCreate(assetName);
-            await this.controllerCreate(assetName);
+            await this.controllerCreate(assetName,true);
             await this.seederCreate(assetName)
 
             success("All necessary assets generated");

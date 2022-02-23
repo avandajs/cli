@@ -232,7 +232,7 @@ var Create = /** @class */ (function () {
                         //    create all assets
                         //    create model
                         _c.sent();
-                        return [4 /*yield*/, this.controllerCreate(assetName)];
+                        return [4 /*yield*/, this.controllerCreate(assetName, true)];
                     case 5:
                         _c.sent();
                         return [4 /*yield*/, this.seederCreate(assetName)];
