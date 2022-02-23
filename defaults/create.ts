@@ -35,23 +35,23 @@ export default class Create implements CommandLine {
         seeder: "./app/seeders",
     }
 
-    private async modelCreate(assetName: string){
+    private async modelCreate(assetName: string, exitOnDone = true){
 
         let template = modelTmp(assetName,{})
 
         await Create.writeCode(template,this.writePaths.model + '/' + assetName + '.ts')
 
         success('Model code successfully generated',false)
-        await (new Boot()).exe(this.writePaths.model,{})
+        await (new Boot()).exe(this.writePaths.model,{},exitOnDone)
     }
-    private async seederCreate(assetName: string){
+    private async seederCreate(assetName: string,exitOnDone = true){
 
         let template = seederTmp(assetName,{})
 
         await Create.writeCode(template,this.writePaths.seeder + '/' + assetName + '.ts')
 
         success('seeder code successfully generated',false)
-        await (new Boot()).exe(this.writePaths.seeder,{})
+        await (new Boot()).exe(this.writePaths.seeder,{},exitOnDone)
     }
     private async middlewareCreate(assetName: string){
 
@@ -81,7 +81,7 @@ export default class Create implements CommandLine {
         await Create.writeCode(template,this.writePaths.controller + '/' + assetName + '.ts')
 
         success('Controller code successfully generated', false)
-        await (new Boot()).exe(this.writePaths.controller,{})
+        await (new Boot()).exe(this.writePaths.controller,{},!autoLinkModel)
 
 
 
@@ -148,9 +148,9 @@ export default class Create implements CommandLine {
         if (options['a']){
         //    create all assets
         //    create model
-            await this.modelCreate(assetName);
+            await this.modelCreate(assetName, false);
             await this.controllerCreate(assetName,true);
-            await this.seederCreate(assetName)
+            await this.seederCreate(assetName, false)
 
             success("All necessary assets generated");
 

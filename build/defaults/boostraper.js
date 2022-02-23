@@ -22,8 +22,9 @@ var Boostrap = /** @class */ (function () {
         }
         return null;
     };
-    Boostrap.prototype.exe = function (target, options) {
+    Boostrap.prototype.exe = function (target, options, exit) {
         if (target === void 0) { target = ''; }
+        if (exit === void 0) { exit = true; }
         var code = "";
         var imports = "";
         var exports = "export default{";
@@ -44,7 +45,7 @@ var Boostrap = /** @class */ (function () {
         code = "".concat(imports).concat(exports);
         fs_1.default.writeFileSync("".concat(target, "/.boot.ts"), code);
         // Write
-        (0, out_1.success)(">> .boot file generted in: ".concat(target));
+        (0, out_1.success)(">> .boot file generted in: ".concat(target), exit);
         // console.log(code)
     };
     return Boostrap;

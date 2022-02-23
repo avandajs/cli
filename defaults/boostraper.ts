@@ -21,7 +21,7 @@ export default class Boostrap implements CommandLine {
         return null
     }
 
-    public exe(target: string = '',options: object) {
+    public exe(target: string = '',options?: object,exit = true) {
 
         let code = ``;
         let imports = ``;
@@ -56,7 +56,7 @@ export default class Boostrap implements CommandLine {
 
         fs.writeFileSync(`${target}/.boot.ts`,code);
         // Write
-        success(`>> .boot file generted in: ${target}`)
+        success(`>> .boot file generted in: ${target}`,exit)
         // console.log(code)
     }
 

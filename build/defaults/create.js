@@ -71,7 +71,8 @@ var Create = /** @class */ (function () {
             seeder: "./app/seeders",
         };
     }
-    Create.prototype.modelCreate = function (assetName) {
+    Create.prototype.modelCreate = function (assetName, exitOnDone) {
+        if (exitOnDone === void 0) { exitOnDone = true; }
         return __awaiter(this, void 0, void 0, function () {
             var template;
             return __generator(this, function (_a) {
@@ -82,7 +83,7 @@ var Create = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         (0, out_1.success)('Model code successfully generated', false);
-                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.model, {})];
+                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.model, {}, exitOnDone)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
@@ -90,7 +91,8 @@ var Create = /** @class */ (function () {
             });
         });
     };
-    Create.prototype.seederCreate = function (assetName) {
+    Create.prototype.seederCreate = function (assetName, exitOnDone) {
+        if (exitOnDone === void 0) { exitOnDone = true; }
         return __awaiter(this, void 0, void 0, function () {
             var template;
             return __generator(this, function (_a) {
@@ -101,7 +103,7 @@ var Create = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         (0, out_1.success)('seeder code successfully generated', false);
-                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.seeder, {})];
+                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.seeder, {}, exitOnDone)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
@@ -159,7 +161,7 @@ var Create = /** @class */ (function () {
                     case 4:
                         _e.sent();
                         (0, out_1.success)('Controller code successfully generated', false);
-                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.controller, {})];
+                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.controller, {}, !autoLinkModel)];
                     case 5:
                         _e.sent();
                         return [2 /*return*/];
@@ -246,7 +248,7 @@ var Create = /** @class */ (function () {
                         if (!options['a']) return [3 /*break*/, 7];
                         //    create all assets
                         //    create model
-                        return [4 /*yield*/, this.modelCreate(assetName)];
+                        return [4 /*yield*/, this.modelCreate(assetName, false)];
                     case 4:
                         //    create all assets
                         //    create model
@@ -254,7 +256,7 @@ var Create = /** @class */ (function () {
                         return [4 /*yield*/, this.controllerCreate(assetName, true)];
                     case 5:
                         _c.sent();
-                        return [4 /*yield*/, this.seederCreate(assetName)];
+                        return [4 /*yield*/, this.seederCreate(assetName, false)];
                     case 6:
                         _c.sent();
                         (0, out_1.success)("All necessary assets generated");
