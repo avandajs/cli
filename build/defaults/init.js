@@ -14,8 +14,8 @@ var Init = /** @class */ (function () {
     Init.prototype.exe = function (projectName, options) {
         if (projectName === void 0) { projectName = ''; }
         var exec = require('child_process').exec;
-        index_1.Out.write("Started creating a project: ".concat(chalk_1.default.green(projectName)));
-        exec("git clone https://github.com/avandajs/avanda-starter.git ".concat(projectName), function (err, stdout, stderr) {
+        index_1.Out.write("Started creating a project: " + chalk_1.default.green(projectName));
+        exec("git clone https://github.com/avandajs/avanda-starter.git " + projectName, function (err, stdout, stderr) {
             // handle err, stdout & stderr
             if (err) {
                 index_1.Out.error(stderr);
@@ -23,9 +23,9 @@ var Init = /** @class */ (function () {
             else {
                 index_1.Out.success("\u2611\uFE0F Project created successfully", false);
                 index_1.Out.write("\u2139\uFE0F Next steps: run the commands below");
-                index_1.Out.write("".concat(chalk_1.default.green('[1]'), " cd ").concat(projectName));
-                index_1.Out.write("".concat(chalk_1.default.green('[2]'), " npm install"));
-                index_1.Out.write("".concat(chalk_1.default.green('[3]'), " npm run dev"));
+                index_1.Out.write(chalk_1.default.green('[1]') + " cd " + projectName);
+                index_1.Out.write(chalk_1.default.green('[2]') + " npm install");
+                index_1.Out.write(chalk_1.default.green('[3]') + " npm run dev");
             }
         });
     };

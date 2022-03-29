@@ -1,6 +1,6 @@
 {
   "name": "@avanda/cli",
-  "version": "0.10.24",
+  "version": "0.9.3",
   "description": "Avanda CLI",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -25,7 +25,9 @@
     "github-download-directory": "^2.0.0",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.16.1"
+    "sequelize": "^6.16.1",
+    "vite": "^2.8.6",
+    "vite-node": "^0.7.12"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

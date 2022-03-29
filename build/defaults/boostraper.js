@@ -38,14 +38,14 @@ var Boostrap = /** @class */ (function () {
             if (!(file.ext == 'ts' || file.ext == 'js') && file.name === '.boot') //skip the main boot file
                 continue;
             var cappedFile = Boostrap.capitalize(file.name);
-            imports += "import ".concat(cappedFile, " from \"./").concat(file.name, "\"; \n");
-            exports += "\n\t".concat(cappedFile, ",");
+            imports += "import " + cappedFile + " from \"./" + file.name + "\"; \n";
+            exports += "\n\t" + cappedFile + ",";
         }
         exports += '\n}';
-        code = "".concat(imports).concat(exports);
-        fs_1.default.writeFileSync("".concat(target, "/.boot.ts"), code);
+        code = "" + imports + exports;
+        fs_1.default.writeFileSync(target + "/.boot.ts", code);
         // Write
-        (0, out_1.success)(">> .boot file generted in: ".concat(target), exit);
+        (0, out_1.success)(">> .boot file generted in: " + target, exit);
         // console.log(code)
     };
     return Boostrap;

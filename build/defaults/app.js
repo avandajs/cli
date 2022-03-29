@@ -101,7 +101,7 @@ var App = /** @class */ (function () {
                     case 0:
                         seeder = this.seeders[tableName];
                         if (!seeder) {
-                            (0, out_1.error)("Error: \"".concat(tableName, "\" model does not exist"));
+                            (0, out_1.error)("Error: \"" + tableName + "\" model does not exist");
                             return [2 /*return*/];
                         }
                         seederInstance = new seeder();
@@ -111,11 +111,11 @@ var App = /** @class */ (function () {
                         return [4 /*yield*/, seederInstance.run(Faker)];
                     case 2:
                         _a.sent();
-                        (0, out_1.success)(">> \u2705 \"".concat(tableName, "\" populated "), false);
+                        (0, out_1.success)(">> \u2705 \"" + tableName + "\" populated ", false);
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
-                        (0, out_1.error)(">> \u274C \"".concat(tableName, "\": ").concat(e_1));
+                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_1);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -131,7 +131,7 @@ var App = /** @class */ (function () {
                     case 0:
                         m = this.models[tableName];
                         if (!m) {
-                            (0, out_1.error)("Error: \"".concat(m, "\" model does not exist"));
+                            (0, out_1.error)("Error: \"" + m + "\" model does not exist");
                             return [2 /*return*/];
                         }
                         model = new m(this.connection);
@@ -142,11 +142,11 @@ var App = /** @class */ (function () {
                     case 2: return [4 /*yield*/, (_a.sent()).sync({ alter: true, logging: false, benchmark: true, force: force })];
                     case 3:
                         _a.sent();
-                        (0, out_1.success)(">> \u2705 \"".concat(tableName, "\" synchronized "), false);
+                        (0, out_1.success)(">> \u2705 \"" + tableName + "\" synchronized ", false);
                         return [3 /*break*/, 5];
                     case 4:
                         e_2 = _a.sent();
-                        (0, out_1.error)(">> \u274C \"".concat(tableName, "\": ").concat(e_2));
+                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_2);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -162,7 +162,7 @@ var App = /** @class */ (function () {
                     case 0:
                         m = this.models[tableName];
                         if (!m) {
-                            (0, out_1.error)("Error: \"".concat(m, "\" model does not exist"));
+                            (0, out_1.error)("Error: \"" + m + "\" model does not exist");
                             return [2 /*return*/];
                         }
                         model = new m(this.connection);
@@ -173,11 +173,11 @@ var App = /** @class */ (function () {
                     case 2: return [4 /*yield*/, (_a.sent()).drop({ logging: false, benchmark: true, cascade: true })];
                     case 3:
                         _a.sent();
-                        (0, out_1.success)(">> \u2705 \"".concat(tableName, "\" dropped "), false);
+                        (0, out_1.success)(">> \u2705 \"" + tableName + "\" dropped ", false);
                         return [3 /*break*/, 5];
                     case 4:
                         e_3 = _a.sent();
-                        (0, out_1.error)(">> \u274C \"".concat(tableName, "\": ").concat(e_3));
+                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_3);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -204,7 +204,7 @@ var App = /** @class */ (function () {
                     case 2:
                         acceptableCommands = ['install', 'uninstall', 'seed'];
                         if (!acceptableCommands.includes(action)) {
-                            (0, out_1.error)("invalid action: ".concat(action));
+                            (0, out_1.error)("invalid action: " + action);
                             return [2 /*return*/];
                         }
                         if (!!tableName) return [3 /*break*/, 10];

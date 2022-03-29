@@ -230,7 +230,6 @@ var Create = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        console.log({ options: options });
                         if (!((_a = options === null || options === void 0 ? void 0 : options.n) !== null && _a !== void 0)) return [3 /*break*/, 1];
                         _b = _a;
                         return [3 /*break*/, 3];

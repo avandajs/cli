@@ -134,7 +134,7 @@ export default class Create implements CommandLine {
 
     public async exe(asset: string = '',options: {n: string,a: any}) {
 
-        console.log({options})
+        // console.log({options})
 
         let assetName = options?.n ?? (await getInput('Enter ' + asset + ' name:'));
 
