@@ -1,6 +1,6 @@
 {
   "name": "@avanda/cli",
-  "version": "0.9.3",
+  "version": "0.9.5",
   "description": "Avanda CLI",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -14,10 +14,10 @@
     "dev": "nodemon"
   },
   "dependencies": {
-    "@avanda/app": "^1.9.52",
+    "@avanda/app": "^1.10.7",
     "@avanda/core": "^0.9.0",
     "@avanda/error": "^0.2.1",
-    "@avanda/orm": "^0.2.28",
+    "@avanda/orm": "^0.2.38",
     "@types/faker": "^5.5.9",
     "axios": "^0.26.0",
     "commander": "^8.2.0",
@@ -26,8 +26,8 @@
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.16.1",
-    "vite": "^2.8.6",
-    "vite-node": "^0.7.12"
+    "vite": "^2.9.0",
+    "vite-node": "^0.7.13"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
