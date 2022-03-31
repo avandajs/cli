@@ -14,10 +14,10 @@
     "dev": "nodemon"
   },
   "dependencies": {
-    "@avanda/app": "^1.10.7",
+    "@avanda/app": "^1.10.9",
     "@avanda/core": "^0.9.0",
     "@avanda/error": "^0.2.1",
-    "@avanda/orm": "^0.2.38",
+    "@avanda/orm": "^0.2.40",
     "@types/faker": "^5.5.9",
     "axios": "^0.26.0",
     "commander": "^8.2.0",
