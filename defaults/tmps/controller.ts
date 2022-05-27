@@ -8,11 +8,25 @@ let controller: Template = function (assetName: string, meta: {modelName?: strin
 ${modelName ? `import ${assetName}Model from "../models/${modelName}"\n`:''}
 export default class ${modelName} extends Controller {
     ${modelName ? `model?:  ${assetName}Model`:''}
-    
     @Get()
-    async get(res: Response,req: Request){  
-        return res.success<any>('hello world',this.model?.first())
+    async get(response: Response,request: Request, model?: Model): Promise<any> {
+        return (await this.model?.first())
     }
+
+    @Get()
+    async getAll(response: Response,request: Request, model?: Model) {
+        return (await this.model?.all())
+    }
+
+    @Get()
+    async getAllByPage(response: Response,request: Request, model?: Model) {
+        let data = await this.model?.page(request.page,true)
+        response.totalPages = this.model.totalPages
+        response.currentPage = request.page
+        response.perPage = this.model.perPage;
+        return response.success('Data fetched',data)
+    }
+
 }
 `
 }
