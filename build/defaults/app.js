@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -62,6 +73,7 @@ var lodash_1 = require("lodash");
 var out_1 = require("../out");
 var confirm_1 = __importDefault(require("../out/confirm"));
 var Faker = __importStar(require("faker"));
+var chalk_table_1 = __importDefault(require("chalk-table"));
 var App = /** @class */ (function () {
     function App() {
         this.command = "app <action>";
@@ -125,7 +137,7 @@ var App = /** @class */ (function () {
     App.prototype.install = function (tableName, force) {
         if (force === void 0) { force = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var m, model, e_2;
+            var m, model;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -135,20 +147,43 @@ var App = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         model = new m(this.connection);
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, model.init()];
-                    case 2: return [4 /*yield*/, (_a.sent()).sync({ alter: true, logging: false, benchmark: true, force: force })];
-                    case 3:
+                    case 1: 
+                    // try {
+                    return [4 /*yield*/, (_a.sent()).sync({ alter: true, logging: false, benchmark: true, force: force })];
+                    case 2:
+                        // try {
                         _a.sent();
                         (0, out_1.success)(">> \u2705 \"" + tableName + "\" synchronized ", false);
-                        return [3 /*break*/, 5];
-                    case 4:
-                        e_2 = _a.sent();
-                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_2);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    App.prototype.describe = function (tableName, force) {
+        if (force === void 0) { force = false; }
+        return __awaiter(this, void 0, void 0, function () {
+            var m, model, struct, fields, _i, _a, col;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        m = this.models[tableName];
+                        if (!m) {
+                            (0, out_1.error)("Error: \"" + m + "\" model does not exist");
+                            return [2 /*return*/];
+                        }
+                        model = new m(this.connection);
+                        return [4 /*yield*/, model.init()];
+                    case 1: return [4 /*yield*/, (_b.sent()).describe()];
+                    case 2:
+                        struct = _b.sent();
+                        fields = [];
+                        for (_i = 0, _a = Object.keys(struct); _i < _a.length; _i++) {
+                            col = _a[_i];
+                            fields.push(__assign({ column: col }, struct[col]));
+                        }
+                        console.log((0, chalk_table_1.default)({}, fields));
+                        return [2 /*return*/];
                 }
             });
         });
@@ -156,7 +191,7 @@ var App = /** @class */ (function () {
     App.prototype.uninstall = function (tableName, force) {
         if (force === void 0) { force = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var m, model, e_3;
+            var m, model, e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -176,8 +211,8 @@ var App = /** @class */ (function () {
                         (0, out_1.success)(">> \u2705 \"" + tableName + "\" dropped ", false);
                         return [3 /*break*/, 5];
                     case 4:
-                        e_3 = _a.sent();
-                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_3);
+                        e_2 = _a.sent();
+                        (0, out_1.error)(">> \u274C \"" + tableName + "\": " + e_2);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -202,7 +237,7 @@ var App = /** @class */ (function () {
                         _c.sent();
                         _c.label = 2;
                     case 2:
-                        acceptableCommands = ['install', 'uninstall', 'seed'];
+                        acceptableCommands = ['install', 'uninstall', 'seed', 'describe'];
                         if (!acceptableCommands.includes(action)) {
                             (0, out_1.error)("invalid action: " + action);
                             return [2 /*return*/];
@@ -222,7 +257,8 @@ var App = /** @class */ (function () {
                         targetAliases = {
                             seed: 'seeders',
                             install: 'models',
-                            uninstall: 'models'
+                            uninstall: 'models',
+                            describe: 'models',
                         };
                         targetList = this[targetAliases[action]];
                         _a = [];

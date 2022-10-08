@@ -5,7 +5,7 @@ import { Model,Seeder } from "@avanda/orm";
 import confirm from "../out/confirm";
 import {Sequelize} from "sequelize/types";
 import * as Faker from "faker";
-
+import chalkTable from "chalk-table"
 
 export default class App implements CommandLine {
     command: string = "app <action>";
@@ -71,13 +71,49 @@ export default class App implements CommandLine {
 
         let model =  new m(this.connection) as Model;
 
-        try {
+        // try {
             await (await model.init()).sync({alter: true,logging: false,benchmark: true,force})
             success(`>> ✅ "${tableName}" synchronized `,false)
-        }catch (e){
-            error(`>> ❌ "${tableName}": ${e}`)
+        // }catch (e){
+        //     error(`>> ❌ "${tableName}": ${e}`)
 
+        // }
+
+    }
+
+
+    private async describe(tableName: string,force: boolean = false){
+
+        let m = this.models[tableName];
+
+        if (!m){
+            error(`Error: "${m}" model does not exist`)
+            return;
         }
+
+        let model =  new m(this.connection) as Model;
+
+        // try {
+            let struct = await (await model.init()).describe();
+
+            let fields = []
+
+            for (const col of Object.keys(struct)) {
+                fields.push({
+                    column: col,
+                    ...struct[col]
+                })
+            }
+
+            console.log(chalkTable({},fields))
+
+
+
+            // success(`>> ✅ "${tableName}" synchronized `,false)
+        // }catch (e){
+        //     error(`>> ❌ "${tableName}": ${e}`)
+
+        // }
 
     }
 
@@ -116,7 +152,7 @@ export default class App implements CommandLine {
             await this.connection.query("SET FOREIGN_KEY_CHECKS = 0", null)
         }
 
-        let acceptableCommands = ['install','uninstall','seed']
+        let acceptableCommands = ['install','uninstall','seed','describe']
 
 
         if (!acceptableCommands.includes(action)) {
@@ -133,7 +169,8 @@ export default class App implements CommandLine {
             let targetAliases = {
                 seed: 'seeders',
                 install: 'models',
-                uninstall: 'models'
+                uninstall: 'models',
+                describe: 'models',
             }
 
             let targetList = this[targetAliases[action]];
