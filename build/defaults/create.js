@@ -48,6 +48,7 @@ var command_tmp_1 = __importDefault(require("./tmps/command.tmp"));
 var model_tmp_1 = __importDefault(require("./tmps/model.tmp"));
 var seeder_tmp_1 = __importDefault(require("./tmps/seeder.tmp"));
 var middleware_tmp_1 = __importDefault(require("./tmps/middleware.tmp"));
+var event_tmp_1 = __importDefault(require("./tmps/event.tmp"));
 var controller_1 = __importDefault(require("./tmps/controller"));
 var Create = /** @class */ (function () {
     function Create() {
@@ -69,6 +70,7 @@ var Create = /** @class */ (function () {
             middleware: "./app/middlewares",
             model: "./app/models",
             seeder: "./app/seeders",
+            event: "./app/events",
         };
     }
     Create.prototype.modelCreate = function (assetName, exitOnDone) {
@@ -103,6 +105,26 @@ var Create = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         (0, out_1.success)('seeder code successfully generated', false);
+                        return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.seeder, {}, exitOnDone)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Create.prototype.eventCreate = function (assetName, exitOnDone) {
+        if (exitOnDone === void 0) { exitOnDone = true; }
+        return __awaiter(this, void 0, void 0, function () {
+            var template;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        template = (0, event_tmp_1.default)(assetName, {});
+                        return [4 /*yield*/, Create.writeCode(template, this.writePaths.event + '/' + assetName + '.ts')];
+                    case 1:
+                        _a.sent();
+                        (0, out_1.success)('event code successfully generated', false);
                         return [4 /*yield*/, (new boostraper_1.default()).exe(this.writePaths.seeder, {}, exitOnDone)];
                     case 2:
                         _a.sent();

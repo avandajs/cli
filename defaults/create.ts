@@ -9,6 +9,8 @@ import commandTmp from "./tmps/command.tmp";
 import modelTmp from "./tmps/model.tmp";
 import seederTmp from "./tmps/seeder.tmp";
 import middlewareTmp from "./tmps/middleware.tmp";
+import eventTmp from "./tmps/event.tmp";
+
 import controllerTmp from "./tmps/controller";
 
 export default class Create implements CommandLine {
@@ -33,6 +35,8 @@ export default class Create implements CommandLine {
         middleware: "./app/middlewares",
         model: "./app/models",
         seeder: "./app/seeders",
+        event: "./app/events",
+
     }
 
     private async modelCreate(assetName: string, exitOnDone = true){
@@ -53,6 +57,17 @@ export default class Create implements CommandLine {
         success('seeder code successfully generated',false)
         await (new Boot()).exe(this.writePaths.seeder,{},exitOnDone)
     }
+
+    private async eventCreate(assetName: string,exitOnDone = true){
+
+        let template = eventTmp(assetName,{})
+
+        await Create.writeCode(template,this.writePaths.event + '/' + assetName + '.ts')
+
+        success('event code successfully generated',false)
+        await (new Boot()).exe(this.writePaths.seeder,{},exitOnDone)
+    }
+    
     private async middlewareCreate(assetName: string){
 
         let template = middlewareTmp(assetName,{})

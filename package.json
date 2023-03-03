@@ -1,6 +1,6 @@
 {
   "name": "@avanda/cli",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Avanda CLI",
   "main": "build/index.js",
   "types": "build/index.d.ts",
