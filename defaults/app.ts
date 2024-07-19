@@ -4,7 +4,7 @@ import {error, success} from "../out";
 import { Model,Seeder } from "@avanda/orm";
 import confirm from "../out/confirm";
 import {Sequelize} from "sequelize/types";
-import * as Faker from "faker";
+import Faker from "@faker-js/faker";
 import chalkTable from "chalk-table"
 
 export default class App implements CommandLine {
@@ -52,7 +52,7 @@ export default class App implements CommandLine {
         let seederInstance =  new seeder();
 
         try {
-            await seederInstance.run(Faker)
+            await seederInstance.run(null)
             success(`>> ✅ "${tableName}" populated `,false)
         }catch (e){
             error(`>> ❌ "${tableName}": ${e}`)

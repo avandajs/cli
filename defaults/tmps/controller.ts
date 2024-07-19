@@ -9,24 +9,19 @@ ${modelName ? `import ${assetName}Model from "../models/${modelName}"\n`:''}
 export default class ${modelName} extends Controller {
     ${modelName ? `model?:  ${assetName}Model`:''}
     @Get()
-    async get(response: Response,request: Request, model?: Model): Promise<any> {
+    async get(res: Response,req: Request) {
         return (await this.model?.first())
     }
 
     @Get()
-    async getAll(response: Response,request: Request, model?: Model) {
+    async getAll(res: Response,req: Request) {
         return (await this.model?.all())
     }
 
     @Get()
-    async getAllByPage(response: Response,request: Request, model?: Model) {
-        let data = await this.model?.page(request.page,true)
-        response.totalPages = this.model.totalPages
-        response.currentPage = request.page
-        response.perPage = this.model.perPage;
-        return response.success('Data fetched',data)
+    async getAllByPage(res: Response,req: Request) {
+        return res.pagedData(req)
     }
-
 }
 `
 }

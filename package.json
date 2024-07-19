@@ -1,6 +1,6 @@
 {
   "name": "@avanda/cli",
-  "version": "0.9.10",
+  "version": "0.9.34",
   "description": "Avanda CLI",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -14,15 +14,14 @@
     "dev": "nodemon"
   },
   "dependencies": {
-    "@avanda/app": "^1.10.9",
+    "@avanda/app": "^2.3.0",
     "@avanda/core": "^0.9.0",
     "@avanda/error": "^0.2.1",
-    "@avanda/orm": "^0.2.40",
-    "@types/faker": "^5.5.9",
+    "@avanda/orm": "^0.3.9",
+    "@faker-js/faker": "^8.4.1",
     "axios": "^0.26.0",
     "chalk-table": "^1.0.2",
     "commander": "^8.2.0",
-    "faker": "^5.5.3",
     "github-download-directory": "^2.0.0",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",

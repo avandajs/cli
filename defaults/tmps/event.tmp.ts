@@ -4,7 +4,7 @@ let command: Template = function (assetName: string,meta: object){
 
     return `import {Broadcastable} from "@avanda/http";
     export default class ${assetName} extends Broadcastable{
-        get path(): string {
+        get channel(): string {
             return 'testing-event';
         }
         payload(): any {
